@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Modification des notes semestrielles{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header bg-warning text-dark">
+    <h5 class="mb-0">✏️ Modification des résultats semestriels</h5>
+  </div>
+
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      {{ formset.management_form }}
+
+      <table class="table table-bordered table-sm">
+        <thead class="table-dark">
+          <tr>
+            <th>Élève</th>
+            <th>Matière</th>
+            <th>Devoir 1</th>
+            <th>Devoir 2</th>
+            <th>Composition</th>
+            <th>Commentaire</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for form in formset %}
+          <tr>
+            <!-- ⚠️ TRÈS IMPORTANT -->
+            {{ form.id }}
+
+            <td>{{ form.instance.student }}</td>
+            <td>{{ form.instance.subject }}</td>
+            <td>{{ form.devoir_1|add_class:"form-control form-control-sm" }}</td>
+            <td>{{ form.devoir_2|add_class:"form-control form-control-sm" }}</td>
+            <td>{{ form.composition|add_class:"form-control form-control-sm" }}</td>
+            <td>{{ form.teacher_comment|add_class:"form-control form-control-sm" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <button type="submit" class="btn btn-success mt-3">
+        💾 Enregistrer les modifications
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

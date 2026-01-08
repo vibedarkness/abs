@@ -1,0 +1,245 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+
+<style>
+    body {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        color: #000;
+    }
+
+    .container { width: 100%; }
+    hr { border: none; border-top: 1px solid #000; margin: 8px 0; }
+
+    /* HEADER */
+    .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 5px;
+    }
+
+    .header-table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .logo {
+        width: 90px;
+        height: auto;
+    }
+
+    .etat {
+        font-size: 13px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .ministere {
+        font-size: 11px;
+    }
+
+    .school-name {
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 3px;
+        text-transform: uppercase;
+    }
+
+    .bulletin-title {
+        font-size: 15px;
+        font-weight: bold;
+        margin-top: 6px;
+        padding: 5px 0;
+        border: 2px solid #000;
+        display: inline-block;
+        width: 65%;
+    }
+
+    /* INFO ELEVE */
+    .info-box {
+        border: 1.5px solid #000;
+        padding: 8px;
+        margin-top: 12px;
+    }
+
+    .info-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .info-table td {
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+
+    /* TABLE NOTES */
+    .notes-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+        table-layout: fixed;
+    }
+
+    .notes-table th,
+    .notes-table td { 
+    border: 1px solid #000; 
+    padding: 3px 4px;      /* ↓ hauteur réduite */
+    text-align: center; 
+    word-wrap: break-word;
+    line-height: 1.1;      /* ↓ espacement vertical */
+    font-size: 11px;       /* ↓ plus compact */
+}
+
+.notes-table tr {
+    height: auto;
+} 
+    .notes-table th {
+        background: #f0f0f0;
+        font-weight: bold;
+    }
+
+    .notes-table td:first-child {
+        text-align: left;
+        padding-left: 8px;
+    }
+
+    .col-matiere { width: 22%; }
+    .col-note { width: 12%; }
+    .col-moyenne { width: 9%; }
+    .col-coef { width: 6%; }
+    .col-total { width: 9%; }
+    .col-appreciation { width: 20%; }
+
+    /* SUMMARY */
+    .summary {
+        margin-top: 15px;
+        border: 1.5px solid #000;
+        padding: 8px;
+        width: 45%;
+        font-weight: bold;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    /* FOOTER */
+    .footer {
+        margin-top: 35px;
+    }
+
+    .signature-table {
+        width: 100%;
+        margin-top: 25px;
+    }
+
+    .signature-table td {
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .signature-line {
+        margin-top: 40px;
+    }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+    <!-- HEADER -->
+    <table class="header-table">
+        <tr>
+            <td width="20%">
+                <img src="{{ logo_left }}" class="logo">
+            </td>
+            <td width="60%">
+                <div class="etat">RÉPUBLIQUE DU SÉNÉGAL</div>
+                <div class="ministere">MINISTÈRE DE L'ÉDUCATION NATIONALE</div>
+                <div class="school-name">{{ school_name }}</div>
+            </td>
+            <td width="20%">
+                <img style="width:120px;" src="{{ logo_right }}" class="logo">
+            </td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <div style="text-align:center;">
+        <div class="bulletin-title">
+            BULLETIN DE NOTES {{ term }}
+        </div>
+    </div>
+
+    <!-- INFOS ELEVE -->
+    <div class="info-box">
+        <table class="info-table">
+            <tr>
+                <td><span class="label">Élève :</span> {{ student }}</td>
+                <td><span class="label">Classe :</span> {{ student.current_class }}</td>
+            </tr>
+            <tr>
+                <td><span class="label">Année académique :</span> {{ session }}</td>
+                <td><span class="label">Semestre :</span> {{ term }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- TABLE NOTES -->
+    <table class="notes-table">
+        <tr>
+            <th class="col-matiere">Matière</th>
+            <th class="col-note">Devoir 1</th>
+            <th class="col-note">Devoir 2</th>
+            <th class="col-note">Composition</th>
+            <th class="col-moyenne">Moyenne</th>
+            <th class="col-coef">Coef</th>
+            <th class="col-total">Total</th>
+            <th class="col-appreciation">Appréciation</th>
+        </tr>
+
+        {% for r in results %}
+        <tr>
+            <td class="col-matiere">{{ r.subject }}</td>
+            <td class="col-note">{{ r.devoir_1 }}</td>
+            <td class="col-note">{{ r.devoir_2 }}</td>
+            <td class="col-note">{{ r.composition }}</td>
+            <td class="col-moyenne"><b>{{ r.average }}</b></td>
+            <td class="col-coef">{{ r.subject.coefficient }}</td>
+            <td class="col-total"><b>{{ r.weighted_average }}</b></td>
+            <td class="col-appreciation">{{ r.grade }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- SUMMARY -->
+    <div class="summary">
+        Moyenne Semestrielle : {{ average }} <br>
+        Mention : {{ mention }}
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <table class="signature-table">
+            <tr>
+                <td>
+                    Le Professeur Principal
+                    <div class="signature-line">_______________________</div>
+                </td>
+                <td>
+                    Le Chef d'Établissement
+                    <div class="signature-line">_______________________</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

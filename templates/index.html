@@ -1,0 +1,384 @@
+<!-- templates/index.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Tableau de Bord</h1>
+    
+    <!-- Row 1: Statistiques principales -->
+    <div class="row mt-4">
+        <!-- Total Étudiants -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Étudiants
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ total_students }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Garçons -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Garçons
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ total_boys }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-male fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filles -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Filles
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ total_girls }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-female fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Staff -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Total Staff
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ total_staff }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-chalkboard-teacher fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 2: Cantine et répartition -->
+    <div class="row">
+        <!-- Cantine -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Abonnés Cantine
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ total_canteen_subscribers }}
+                            </div>
+                            <div class="mt-2 mb-0 text-muted text-xs">
+                                <span class="text-success mr-2">
+                                    <i class="fas fa-arrow-up"></i> {{ canteen_percentage }}%
+                                </span>
+                                <span>des étudiants</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-utensils fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Staff Hommes -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Staff Hommes
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ staff_men }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-tie fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Staff Femmes -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Staff Femmes
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ staff_women }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-tie fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statut Cantine -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-secondary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
+                                Cantine Payée
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ paid_canteen }}
+                            </div>
+                            <div class="mt-2 mb-0 text-muted text-xs">
+                                <span class="mr-2">Partiel: {{ partial_canteen }}</span>
+                                <span>| Impayé: {{ unpaid_canteen }}</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 3: Graphiques -->
+    <div class="row">
+        <!-- Graphique 1: Répartition par genre (Étudiants) -->
+        <div class="col-xl-4 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        Répartition par Genre (Étudiants)
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4">
+                        <canvas id="genderChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-primary"></i> Garçons
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-info"></i> Filles
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graphique 2: Répartition par genre (Staff) -->
+        <div class="col-xl-4 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-success">
+                        Répartition par Genre (Staff)
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4">
+                        <canvas id="staffGenderChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> Hommes
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-warning"></i> Femmes
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graphique 3: Statut paiement cantine -->
+        <div class="col-xl-4 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-danger">
+                        Statut Paiement Cantine
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4">
+                        <canvas id="canteenStatusChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> Payé
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-warning"></i> Partiel
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-danger"></i> Impayé
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 4: Tableau des classes -->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        Étudiants par Classe
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Classe</th>
+                                    <th>Nombre d'étudiants</th>
+                                    <th>Pourcentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in students_by_class %}
+                                <tr>
+                                    <td>{{ item.current_class__name|default:"Non assigné" }}</td>
+                                    <td>{{ item.count }}</td>
+                                    <td>
+                                        {% widthratio item.count total_students 100 %}%
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center">Aucun étudiant trouvé</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inclure Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// Graphique 1: Répartition par genre (Étudiants)
+var genderChart = new Chart(document.getElementById('genderChart'), {
+    type: 'pie',
+    data: {
+        labels: ['Garçons', 'Filles'],
+        datasets: [{
+            data: [{{ total_boys }}, {{ total_girls }}],
+            backgroundColor: ['#4e73df', '#36b9cc'],
+            hoverBackgroundColor: ['#2e59d9', '#2c9faf'],
+            hoverBorderColor: "rgba(234, 236, 244, 1)",
+        }],
+    },
+    options: {
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    }
+});
+
+// Graphique 2: Répartition par genre (Staff)
+var staffGenderChart = new Chart(document.getElementById('staffGenderChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Hommes', 'Femmes'],
+        datasets: [{
+            data: [{{ staff_men }}, {{ staff_women }}],
+            backgroundColor: ['#1cc88a', '#f6c23e'],
+            hoverBackgroundColor: ['#17a673', '#dda20a'],
+            hoverBorderColor: "rgba(234, 236, 244, 1)",
+        }],
+    },
+    options: {
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    }
+});
+
+// Graphique 3: Statut paiement cantine
+var canteenStatusChart = new Chart(document.getElementById('canteenStatusChart'), {
+    type: 'pie',
+    data: {
+        labels: ['Payé', 'Partiel', 'Impayé'],
+        datasets: [{
+            data: [{{ paid_canteen }}, {{ partial_canteen }}, {{ unpaid_canteen }}],
+            backgroundColor: ['#10B981', '#F59E0B', '#EF4444'],
+            hoverBackgroundColor: ['#059669', '#D97706', '#DC2626'],
+            hoverBorderColor: "rgba(234, 236, 244, 1)",
+        }],
+    },
+    options: {
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    }
+});
+</script>
+
+{% endblock content %}

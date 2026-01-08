@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-8">
+    <form action="" method="POST">
+      {% csrf_token %}
+
+      {% include 'corecode/form_snippet.html' %}
+
+      <input type="submit" class="btn btn-primary" value="Ajouter un paiement">
+
+    </form>
+  </div>
+
+  <div class="col-4">
+    <div class="alert alert-info" role="alert">
+      <h3>Facture Cantine</h3>
+      <p>{{ invoice.student|upper }}</p>
+      <hr>
+      <ul class="list-unstyled">
+
+        <li><strong>Session :</strong> {{ invoice.session }}</li>
+        <li><strong>Date de création :</strong> {{ invoice.datecreation }}</li>
+
+        <li><strong>Montant total à payer :</strong>
+          {{ invoice.total_amount|intcomma }}
+        </li>
+
+        <li><strong>Montant total payé :</strong>
+          {{ invoice.total_paid|intcomma }}
+        </li>
+
+        <li>
+          <strong>Solde :</strong>
+          <span class="{% if invoice.balance > 0 %}text-danger{% else %}text-success{% endif %}">
+            {{ invoice.balance|intcomma }}
+          </span>
+        </li>
+
+        <li>
+          <strong>Status :</strong>
+          {% if invoice.status == 'paid' %}
+            <span class="badge badge-success">Payé</span>
+          {% elif invoice.status == 'partial' %}
+            <span class="badge badge-warning">Partiel</span>
+          {% else %}
+            <span class="badge badge-danger">Impayé</span>
+          {% endif %}
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

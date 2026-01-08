@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Résultats mensuels{% endblock %}
+
+{% block content %}
+
+<div class="card mb-3">
+  <div class="card-header bg-dark text-white">
+    Filtres
+  </div>
+  <div class="card-body">
+    <form method="get" class="row g-3">
+
+      <!-- Année académique -->
+      <div class="col-md-4">
+        <label>Année académique</label>
+        <select name="session" class="form-control">
+          <option value="">Toutes</option>
+          {% for s in sessions %}
+            <option value="{{ s.id }}" {% if s.id|stringformat:"s" == selected_session %}selected{% endif %}>
+              {{ s }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Classe -->
+      <div class="col-md-4">
+        <label>Classe</label>
+        <select name="class" class="form-control">
+          <option value="">Toutes</option>
+          {% for c in classes %}
+            <option value="{{ c.id }}" {% if c.id|stringformat:"s" == selected_class %}selected{% endif %}>
+              {{ c }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Mois -->
+      <div class="col-md-4">
+        <label>Mois</label>
+        <select name="month" class="form-control">
+          <option value="">Tous</option>
+          {% for m in months %}
+            <option value="{{ m.id }}" {% if m.id|stringformat:"s" == selected_month %}selected{% endif %}>
+              {{ m }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-md-12">
+        <button class="btn btn-primary w-100 mt-2">
+          Filtrer
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- LISTE DES ÉLÈVES -->
+<div class="card">
+  <div class="card-header bg-primary text-white">
+    Élèves
+  </div>
+
+  <table class="table table-bordered table-hover mb-0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Élève</th>
+        <th>Classe</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in students %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ student }}</td>
+        <td>{{ student.current_class }}</td>
+        <td>
+  <a href="{% url 'monthly-bulletin-pdf' student.id %}?session={{ selected_session }}&month={{ selected_month }}"
+     class="btn btn-sm btn-danger">
+    📄 Bulletin Mensuel
+  </a>
+</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" class="text-center text-muted">
+          Aucun élève trouvé
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

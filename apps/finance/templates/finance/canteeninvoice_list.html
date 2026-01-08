@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Factures Cantine{% endblock title %}
+
+{% block breadcrumb %}
+<a class="btn btn-primary" href="{% url 'canteen-invoice-create' %}">
+  <i class="fas fa-plus"></i> Nouvelle facture cantine
+</a>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="table-responsive">
+  <table id="canteentable" class="table table-bordered table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>N°</th>
+        <th>Élève</th>
+        <th>Session</th>
+        <th>Total à payer</th>
+        <th>Total payé</th>
+        <th>Solde</th>
+        <th>Date</th>
+        <th>Statut</th>
+        <th>Reçu</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for invoice in object_list %}
+      <tr class="clickable-row"
+          data-href="{% url 'canteen-invoice-detail' invoice.id %}">
+        <td>{{ forloop.counter }}</td>
+        <td>{{ invoice.student }}</td>
+        <td>{{ invoice.session }}</td>
+        <td>{{ invoice.total_amount|intcomma }}</td>
+        <td>{{ invoice.total_paid|intcomma }}</td>
+        <td>{{ invoice.balance|intcomma }}</td>
+        <td>{{ invoice.datecreation }}</td>
+        <td>
+          {% if invoice.status == 'paid' %}
+            <span class="badge badge-success">Payé</span>
+          {% elif invoice.status == 'partial' %}
+            <span class="badge badge-warning">Partiel</span>
+          {% else %}
+            <span class="badge badge-danger">Impayé</span>
+          {% endif %}
+        </td>
+        <td><a class="btn btn-success btn-sm"
+                href="{% url 'canteen-payment-create' %}?invoice={{ invoice.id }}">Ajouter un nouveau
+                reçu</a></td>
+      </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+</div>
+{% endblock content %}
+
+{% block morejs %}
+<script>
+  $('#canteentable').DataTable({
+    select: false
+  });
+
+  $(".clickable-row").click(function () {
+    window.location = $(this).data("href");
+  });
+</script>
+{% endblock morejs %}

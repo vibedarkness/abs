@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="" method="POST">
+  {% csrf_token %}
+
+  <div class="alert alert-danger">
+    <p>Êtes-vous sûr de vouloir supprimer la facture cantine :</p>
+    <p><strong>"{{ object }}"</strong></p>
+    <p>Tous les paiements liés à cette facture seront supprimés.</p>
+  </div>
+
+  <input type="submit" class="btn btn-danger" value="Confirmer la suppression">
+  <a href="{% url 'canteen-invoice-list' %}" class="btn btn-secondary">
+    Annuler
+  </a>
+
+</form>
+
+{% endblock content %}

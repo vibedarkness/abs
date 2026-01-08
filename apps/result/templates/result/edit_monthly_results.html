@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Modification des notes mensuelles{% endblock %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {{ formset.management_form }}
+
+  <table class="table table-bordered table-sm">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Élève</th>
+        <th>Matière</th>
+        <th>Devoir 1</th>
+        <th>Devoir 2</th>
+        <th>Composition</th>
+        <th>Moyenne</th>
+        <th>Supprimer</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for form in formset %}
+      {{ form.id }}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ form.instance.student }}</td>
+        <td>{{ form.instance.subject }}</td>
+        <td>{{ form.devoir_1|add_class:"form-control form-control-sm" }}</td>
+        <td>{{ form.devoir_2|add_class:"form-control form-control-sm" }}</td>
+        <td>{{ form.composition|add_class:"form-control form-control-sm" }}</td>
+        <td><strong>{{ form.instance.average }}</strong></td>
+        <td>{{ form.DELETE }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <button class="btn btn-success">Enregistrer</button>
+</form>
+{% endblock %}

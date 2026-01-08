@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Bulletin mensuel{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header bg-info text-white text-center">
+    <h4>BULLETIN MENSUEL</h4>
+    <p>{{ student }} — {{ student.current_class }}</p>
+    <p>{{ month }} | {{ term }} | {{ session }}</p>
+  </div>
+
+  <div class="card-body">
+    <table class="table table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Matière</th>
+          <th>D1</th>
+          <th>D2</th>
+          <th>Composition</th>
+          <th>Moyenne</th>
+          <th>Coef</th>
+          <th>Moy. Pondérée</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in results %}
+        <tr>
+          <td>{{ r.subject }}</td>
+          <td>{{ r.devoir_1 }}</td>
+          <td>{{ r.devoir_2 }}</td>
+          <td>{{ r.composition }}</td>
+          <td><strong>{{ r.average }}</strong></td>
+          <td>{{ r.subject.coefficient }}</td>
+          <td><strong>{{ r.weighted_average }}</strong></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class="table-success">
+        <tr>
+          <td colspan="6"><strong>Moyenne Générale</strong></td>
+          <td><strong>{{ average }}</strong></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+{% endblock %}

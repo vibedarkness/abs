@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Résultats Annuels{% endblock %}
+
+{% block content %}
+<table class="table table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th>Élève</th>
+      <th>Classe</th>
+      <th>Moyenne Finale</th>
+      <th>Mention</th>
+      <th>Décision</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in results %}
+    <tr>
+      <td>{{ r.student }}</td>
+      <td>{{ r.current_class }}</td>
+      <td>{{ r.final_average }}</td>
+      <td>{{ r.mention }}</td>
+      <td>
+        <span class="badge {% if r.decision == 'PASS' %}bg-success{% else %}bg-danger{% endif %}">
+          {{ r.get_decision_display }}
+        </span>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

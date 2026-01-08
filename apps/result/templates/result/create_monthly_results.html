@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Création des notes mensuelles{% endblock %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+
+  <div class="card mb-3">
+    <div class="card-header bg-primary text-white">
+      Paramètres
+    </div>
+    <div class="card-body row">
+      <div class="col-md-4">
+        {{ form.session.label_tag }}
+        {{ form.session|add_class:"form-control" }}
+      </div>
+      <div class="col-md-4">
+        {{ form.term.label_tag }}
+        {{ form.term|add_class:"form-control" }}
+      </div>
+      <div class="col-md-4">
+        {{ form.month.label_tag }}
+        {{ form.month|add_class:"form-control" }}
+      </div>
+      <div class="col-md-12 mt-3">
+        {{ form.subjects.label_tag }}
+        {{ form.subjects }}
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header bg-secondary text-white">
+      Sélection des élèves
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Nom</th>
+            <th>Classe</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in students %}
+          <tr>
+            <td><input type="checkbox" name="students" value="{{ student.id }}"></td>
+            <td>{{ student }}</td>
+            <td>{{ student.current_class }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <button class="btn btn-success mt-3">Créer les notes</button>
+</form>
+{% endblock %}
